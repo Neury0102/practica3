@@ -19,8 +19,8 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="practica3Blog_main" target="1.5" />
-      <module name="practica3Blog_test" target="1.5" />
+      <module name="practica3Blog_main" target="1.8" />
+      <module name="practica3Blog_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
