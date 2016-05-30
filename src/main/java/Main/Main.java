@@ -3,6 +3,8 @@ package Main; /**
  */
 
 
+import modelos.Articulo;
+import services.ArticuloServices;
 import services.DataBaseServices;
 import spark.ModelAndView;
 import freemarker.template.Configuration;
@@ -23,10 +25,10 @@ public class Main {
         configuration.setClassForTemplateLoading(Main.class, "/templates");
         FreeMarkerEngine freeMarkerEngine = new FreeMarkerEngine(configuration);
 
-        String Select = "INSERT INTO articulos  VALUES(2011,'mujeres','ariel','papazon','2011-12-24');";
-        stmt.execute(Select);
 
+        Articulo articulo = ArticuloServices.getArticulo(1);
 
+        System.out.println("asdf");
 
         get("/hello", (req, res) -> "Hello World");
 
