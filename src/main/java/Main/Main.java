@@ -5,12 +5,10 @@ package Main; /**
 
 import services.DataBaseServices;
 import spark.ModelAndView;
-import spark.ModelAndView;
 import freemarker.template.Configuration;
 import spark.template.freemarker.FreeMarkerEngine;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.Statement;
 
 import static spark.Spark.*;
