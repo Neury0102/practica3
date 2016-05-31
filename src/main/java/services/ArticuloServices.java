@@ -3,7 +3,7 @@ package services;
 import modelos.Articulo;
 import modelos.Comentario;
 import modelos.Etiqueta;
-
+import java.sql.Date;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -110,5 +110,36 @@ public class ArticuloServices {
 
     }
 
+    public boolean crearArticulo(Articulo articulo){
+        boolean ok=false;
+        Connection conn=null;
+        try {
+
+            String query = "insert into articulos(id, titulo, cuerpo, autor, fecha) values(?,?,?,?,?)";
+            conn = DataBaseServices.getInstancia().getConexion();
+            //
+            PreparedStatement prepareStatement = conn.prepareStatement(query);
+            //Antes de ejecutar seteo los parametros.
+            prepareStatement.setInt(1, articulo.getId());
+            prepareStatement.setString(2, articulo.getTitulo());
+            prepareStatement.setString(3, articulo.getCuerpo());
+            prepareStatement.setString(4, articulo.getAutor());
+            prepareStatement.setDate(5, (Date)articulo.getFecha());
+            //
+            int fila = prepareStatement.executeUpdate();
+            ok = fila > 0 ;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ArticuloServices.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            try {
+                conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ArticuloServices.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        return ok;
+    }
 
 }
