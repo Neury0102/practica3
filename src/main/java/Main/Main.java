@@ -4,8 +4,12 @@ package Main; /**
 
 
 import modelos.Articulo;
+import modelos.Comentario;
+import modelos.Etiqueta;
 import services.ArticuloServices;
+import services.ComentarioServices;
 import services.DataBaseServices;
+import services.EtiquetaServices;
 import spark.ModelAndView;
 import freemarker.template.Configuration;
 import spark.template.freemarker.FreeMarkerEngine;
@@ -26,13 +30,17 @@ public class Main {
         FreeMarkerEngine freeMarkerEngine = new FreeMarkerEngine(configuration);
 
 
-        Articulo articulo = ArticuloServices.getArticulo(1);
+        Etiqueta estiqueta = EtiquetaServices.getEtiqueta(2);
 
-        System.out.println("asdf");
-
+        System.out.println("dkdd");
         get("/hello", (req, res) -> "Hello World");
+
 
         ManejoTemplates mt = new ManejoTemplates();
         mt.manejarTemplates();
+
+
+
+
     }
 }

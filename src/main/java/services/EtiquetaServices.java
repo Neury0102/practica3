@@ -1,8 +1,11 @@
 package services;
 
-import modelos.Articulo;
+/**
+ * Created by Dell_2 on 5/30/2016.
+ */
+
+import modelos.Comentario;
 import modelos.Etiqueta;
-import modelos.Usuario;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,29 +13,23 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+public class EtiquetaServices {
 
-/**
- * Created by saleta on 5/30/2016.
- */
-public class UsuarioServices {
-    public static Usuario getUsuario(String username) {
+    public static Etiqueta getEtiqueta(int id) {
 
-        Usuario usuario = null;
+        Etiqueta etiqueta = null;
         Connection con = null;
         try {
 
-            String query = "select * from usuarios where username = ?";
+            String query = "select * from etiquetas where id = ?";
             con = DataBaseServices.getInstancia().getConexion();
             PreparedStatement prepareStatement = con.prepareStatement(query);
-            prepareStatement.setString(1, username);
+            prepareStatement.setInt(1, id);
             ResultSet rs = prepareStatement.executeQuery();
             while(rs.next()){
-                usuario = new Usuario();
-                usuario.setNombre(rs.getString("nombre"));
-                usuario.setAdministrador(rs.getBoolean("administrator"));
-                usuario.setAutor(rs.getBoolean("autor"));
-                usuario.setPassword(rs.getString("password"));
-                usuario.setUsername(rs.getString("username"));
+                etiqueta = new Etiqueta();
+                etiqueta.setId(rs.getInt("id"));
+                etiqueta.setEtiqueta(rs.getString("etiqueta"));
 
             }
         } catch (SQLException ex) {
@@ -45,24 +42,26 @@ public class UsuarioServices {
             }
         }
 
-        return usuario;
+        return etiqueta;
     }
 
-    public boolean crearUsuario(Usuario usuario){
+
+    public boolean crearEtiqueta(Etiqueta etiqueta){
         boolean ok=false;
         Connection conn=null;
         try {
 
-            String query = "insert into usuario(username , nombre , password ,administrator ,autor ) values(?,?,?,?,?)";
+            String query = "insert into etiquetas(id, etiqueta, articulo) values(?,?,?)";
             conn = DataBaseServices.getInstancia().getConexion();
             //
             PreparedStatement prepareStatement = conn.prepareStatement(query);
             //Antes de ejecutar seteo los parametros.
-            prepareStatement.setString(1, usuario.getUsername());
-            prepareStatement.setString(2, usuario.getNombre());
-            prepareStatement.setString(3, usuario.getPassword());
-            prepareStatement.setBoolean(4,usuario.getAdministrador());
-            prepareStatement.setBoolean(5,usuario.getAutor());
+            prepareStatement.setInt(1, etiqueta.getId());
+            prepareStatement.setString(2, etiqueta.getEtiqueta());
+            //OJO check que la tabla tiene tres campos y la clase tiene dos el tercer valor que le mando en el insert es
+            //el mismo ID check si es asi
+            prepareStatement.setInt(3, etiqueta.getId());
+
             //
             int fila = prepareStatement.executeUpdate();
             ok = fila > 0 ;
@@ -79,4 +78,5 @@ public class UsuarioServices {
 
         return ok;
     }
+
 }

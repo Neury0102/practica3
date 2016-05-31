@@ -6,6 +6,7 @@ import java.util.Date;
 /**
  * Created by saleta on 5/30/2016.
  */
+
 public class Articulo {
     private int id;
     private String titulo;

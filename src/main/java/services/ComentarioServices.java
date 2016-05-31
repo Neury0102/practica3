@@ -1,38 +1,36 @@
 package services;
 
+/**
+ * Created by Dell_2 on 5/30/2016.
+ */
+
 import modelos.Articulo;
-import modelos.Etiqueta;
+import modelos.Comentario;
 import modelos.Usuario;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- * Created by saleta on 5/30/2016.
- */
-public class UsuarioServices {
-    public static Usuario getUsuario(String username) {
+public class ComentarioServices {
 
-        Usuario usuario = null;
+    public static Comentario getComentario(int id) {
+
+        Comentario comentario = null;
         Connection con = null;
         try {
 
-            String query = "select * from usuarios where username = ?";
+            String query = "select * from comentarios where id = ?";
             con = DataBaseServices.getInstancia().getConexion();
             PreparedStatement prepareStatement = con.prepareStatement(query);
-            prepareStatement.setString(1, username);
+            prepareStatement.setInt(1, id);
             ResultSet rs = prepareStatement.executeQuery();
             while(rs.next()){
-                usuario = new Usuario();
-                usuario.setNombre(rs.getString("nombre"));
-                usuario.setAdministrador(rs.getBoolean("administrator"));
-                usuario.setAutor(rs.getBoolean("autor"));
-                usuario.setPassword(rs.getString("password"));
-                usuario.setUsername(rs.getString("username"));
+                comentario = new Comentario();
+                comentario.setId(rs.getInt("id"));
+                comentario.setComentario(rs.getString("comentario"));
+                comentario.setArticulo(ArticuloServices.getArticulo(rs.getInt("id")));
+                comentario.setAutor(UsuarioServices.getUsuario(rs.getString("autor")));
 
             }
         } catch (SQLException ex) {
@@ -45,24 +43,23 @@ public class UsuarioServices {
             }
         }
 
-        return usuario;
+        return comentario;
     }
 
-    public boolean crearUsuario(Usuario usuario){
+    public boolean crearComentario(Comentario comentario){
         boolean ok=false;
         Connection conn=null;
         try {
 
-            String query = "insert into usuario(username , nombre , password ,administrator ,autor ) values(?,?,?,?,?)";
+            String query = "insert into comentarios(id, comentario, autor, articulo) values(?,?,?,?)";
             conn = DataBaseServices.getInstancia().getConexion();
             //
             PreparedStatement prepareStatement = conn.prepareStatement(query);
             //Antes de ejecutar seteo los parametros.
-            prepareStatement.setString(1, usuario.getUsername());
-            prepareStatement.setString(2, usuario.getNombre());
-            prepareStatement.setString(3, usuario.getPassword());
-            prepareStatement.setBoolean(4,usuario.getAdministrador());
-            prepareStatement.setBoolean(5,usuario.getAutor());
+            prepareStatement.setInt(1, comentario.getId());
+            prepareStatement.setString(2, comentario.getComentario());
+            prepareStatement.setString(3,comentario.getAutor().getUsername());
+            prepareStatement.setInt(4, comentario.getArticulo().getId());
             //
             int fila = prepareStatement.executeUpdate();
             ok = fila > 0 ;
@@ -79,4 +76,6 @@ public class UsuarioServices {
 
         return ok;
     }
+
+
 }
