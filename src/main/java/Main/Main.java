@@ -32,6 +32,7 @@ public class Main {
 
         get("/hello", (req, res) -> "Hello World");
 
-
+        ManejoTemplates mt = new ManejoTemplates();
+        mt.manejarTemplates();
     }
 }
