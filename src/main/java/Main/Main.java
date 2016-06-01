@@ -38,7 +38,8 @@ public class Main {
 
         ManejoTemplates mt = new ManejoTemplates();
         mt.manejarTemplates();
-
+        ManejoFormularios mf = new ManejoFormularios();
+        mf.manejarFormularios();
 
 
 
