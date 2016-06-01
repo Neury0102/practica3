@@ -30,7 +30,7 @@ public class ArticuloServices {
                 while(rs.next()){
                     articulo = new Articulo();
                     articulo.setId(rs.getInt("id"));
-                    articulo.setAutor(rs.getString("autor"));
+                    articulo.setAutor(UsuarioServices.getUsuario(rs.getString("autor")));
                     articulo.setComentarios(getComentariosArticulo(articulo));
                     articulo.setTitulo(rs.getString("titulo"));
                     articulo.setCuerpo(rs.getString("cuerpo"));
@@ -123,7 +123,7 @@ public class ArticuloServices {
             prepareStatement.setInt(1, articulo.getId());
             prepareStatement.setString(2, articulo.getTitulo());
             prepareStatement.setString(3, articulo.getCuerpo());
-            prepareStatement.setString(4, articulo.getAutor());
+            prepareStatement.setString(4, articulo.getAutor().getUsername());
             prepareStatement.setDate(5, (Date)articulo.getFecha());
             //
             int fila = prepareStatement.executeUpdate();

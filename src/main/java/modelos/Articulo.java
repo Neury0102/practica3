@@ -11,7 +11,7 @@ public class Articulo {
     private int id;
     private String titulo;
     private  String cuerpo;
-    private String autor;
+    private Usuario autor;
     private Date fecha;
     private ArrayList<Comentario> comentarios;
     private ArrayList<Etiqueta> etiquetas;
@@ -40,11 +40,11 @@ public class Articulo {
         this.cuerpo = cuerpo;
     }
 
-    public String getAutor() {
+    public Usuario getAutor() {
         return autor;
     }
 
-    public void setAutor(String autor) {
+    public void setAutor(Usuario autor) {
         this.autor = autor;
     }
 
