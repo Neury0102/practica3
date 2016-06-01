@@ -50,6 +50,39 @@ public class ArticuloServices {
         return articulo;
     }
 
+    public static ArrayList<Articulo> getTodosArticulos() {
+        ArrayList<Articulo> articulos = new ArrayList<>();
+        Connection con = null;
+        try {
+
+            String query = "select * from articulos order by FECHA DESC";
+            con = DataBaseServices.getInstancia().getConexion();
+            PreparedStatement prepareStatement = con.prepareStatement(query);
+            ResultSet rs = prepareStatement.executeQuery();
+            while(rs.next()){
+                Articulo articulo = new Articulo();
+                articulo.setId(rs.getInt("id"));
+                articulo.setAutor(UsuarioServices.getUsuario(rs.getString("autor")));
+                articulo.setComentarios(getComentariosArticulo(articulo));
+                articulo.setTitulo(rs.getString("titulo"));
+                articulo.setCuerpo(rs.getString("cuerpo"));
+                articulo.setFecha(rs.getDate("fecha"));
+                articulo.setEtiquetas(getEtiquetasArticulo(articulo));
+                articulos.add(articulo);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ArticuloServices.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ArticuloServices.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        return articulos;
+    }
+
     private static ArrayList<Comentario> getComentariosArticulo (Articulo  articulo){
         Connection con = null;
         ArrayList<Comentario> comentarios = new ArrayList<Comentario>();

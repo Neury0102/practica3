@@ -9,5 +9,25 @@
     <#include "/header.ftl">
 </div>
 
+<div class="container">
+    <#list articulos as articulo>
+        <div class="col-lg-8">
+            <h4>${articulo.titulo}</h4>
+            <p>${articulo.fecha}</p>
+            <p>${articulo.cuerpo} </p>
+            <hr>
+        </div>
+    </#list>
+
+</div>
+
+
+    <!-- /.row -->
+
+
+
+
+
+
 </body>
 </html>

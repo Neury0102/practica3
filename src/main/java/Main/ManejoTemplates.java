@@ -7,6 +7,7 @@ import services.ArticuloServices;
 import spark.ModelAndView;
 import spark.template.freemarker.FreeMarkerEngine;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,8 +30,9 @@ public class ManejoTemplates {
             Usuario u = new Usuario();
             u.setAdministrador(false);
             u.setAutor(false);
-
+            ArrayList<Articulo> articulos = ArticuloServices.getTodosArticulos();
             attributes.put("usuario", u);
+            attributes.put("articulos", articulos);
             return new ModelAndView(attributes, "index.ftl");
         }, freeMarkerEngine);
 
