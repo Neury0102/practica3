@@ -25,7 +25,7 @@
             <hr>
 
             <div class="well">
-                <h4>¿Quieres decir algo?</h4>
+                <h4>¿Quieres decir algo??</h4>
                 <form role="form">
                     <div class="form-group">
                         <textarea class="form-control" rows="3"></textarea>
