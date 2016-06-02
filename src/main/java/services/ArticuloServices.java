@@ -36,6 +36,10 @@ public class ArticuloServices {
                     articulo.setCuerpo(rs.getString("cuerpo"));
                     articulo.setFecha(rs.getDate("fecha"));
                     articulo.setEtiquetas(getEtiquetasArticulo(articulo));
+                    if(articulo.getCuerpo().length() > 70)
+                        articulo.setPreview(articulo.getCuerpo().substring(0,70) + "...");
+                    else
+                        articulo.setPreview(articulo.getCuerpo());
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(ArticuloServices.class.getName()).log(Level.SEVERE, null, ex);
@@ -67,6 +71,10 @@ public class ArticuloServices {
                 articulo.setTitulo(rs.getString("titulo"));
                 articulo.setCuerpo(rs.getString("cuerpo"));
                 articulo.setFecha(rs.getDate("fecha"));
+                if(articulo.getCuerpo().length() > 70)
+                    articulo.setPreview(articulo.getCuerpo().substring(0,70) + "...");
+                else
+                    articulo.setPreview(articulo.getCuerpo());
                 articulo.setEtiquetas(getEtiquetasArticulo(articulo));
                 articulos.add(articulo);
             }

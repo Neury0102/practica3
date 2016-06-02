@@ -10,11 +10,12 @@
 </div>
 
 <div class="container">
+    <h2>Artículos</h2>
     <#list articulos as articulo>
         <div class="col-lg-8">
-            <h4>${articulo.titulo}</h4>
+            <a href="verArticulo/${articulo.id}"><h4>${articulo.titulo}</h4></a>
             <p>${articulo.fecha}</p>
-            <p>${articulo.cuerpo} </p>
+            <p>${articulo.preview} </p>
             <hr>
         </div>
     </#list>

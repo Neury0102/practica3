@@ -40,4 +40,13 @@ public class Comentario {
     public void setArticulo(Articulo articulo) {
         this.articulo = articulo;
     }
+
+    public Comentario(String comentario, Usuario autor, Articulo articulo) {
+        this.comentario = comentario;
+        this.autor = autor;
+        this.articulo = articulo;
+    }
+
+    public Comentario() {
+    }
 }

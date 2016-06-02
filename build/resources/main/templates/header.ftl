@@ -14,9 +14,9 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <#if usuario.administrador>
-                        <li><a href="">Administraci&oacute;n</a></li>
+                        <li><a href="/administracion/">Administraci&oacute;n</a></li>
                     </#if>
-                    <#if usuario.autor || usuario.administrador>
+                    <#if usuario.autor || usuario.administrador || !usuario.esInvitado>
                         <li><a href="">Cerrar Sesi&oacute;n</a></li>
                     <#else>
                         <li><a href="/login">Iniciar Sesi&oacute;n</a></li>

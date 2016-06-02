@@ -13,6 +13,7 @@
 
     <div class="row">
         <div class="col-lg-8">
+
             <h1>${articulo.titulo}</h1>
 
             <p class="lead">
@@ -26,10 +27,12 @@
 
             <div class="well">
                 <h4>¿Quieres decir algo??</h4>
-                <form role="form">
+                <form action="/procesarNuevoComentario/" METHOD="post">
                     <div class="form-group">
-                        <textarea class="form-control" rows="3"></textarea>
+                        <textarea class="form-control" rows="3" name="comentario"></textarea>
                     </div>
+                    <input type="hidden" value="${articulo.id}" name="articulo">
+                    <input type="hidden" value="${usuario.username}" name="username">
                     <button type="submit" class="btn btn-primary">Dejar comentario</button>
                 </form>
             </div>

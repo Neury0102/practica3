@@ -9,6 +9,15 @@ public class Usuario {
     private String nombre;
     private Boolean administrador;
     private Boolean autor;
+    private Boolean esInvitado = false;
+
+    public Boolean getEsInvitado() {
+        return esInvitado;
+    }
+
+    public void setEsInvitado(Boolean esInvitado) {
+        this.esInvitado = esInvitado;
+    }
 
     public String getUsername() {
         return username;
@@ -36,6 +45,18 @@ public class Usuario {
 
     public Boolean getAdministrador() {
         return administrador;
+    }
+
+    public Usuario(Boolean autor, Boolean administrador, String nombre, String password, String username) {
+        this.autor = autor;
+        this.administrador = administrador;
+        this.nombre = nombre;
+        this.password = password;
+        this.username = username;
+
+    }
+
+    public Usuario() {
     }
 
     public void setAdministrador(Boolean administrador) {

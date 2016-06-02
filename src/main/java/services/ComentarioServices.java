@@ -46,20 +46,19 @@ public class ComentarioServices {
         return comentario;
     }
 
-    public boolean crearComentario(Comentario comentario){
+    public static boolean  crearComentario(Comentario comentario){
         boolean ok=false;
         Connection conn=null;
         try {
 
-            String query = "insert into comentarios(id, comentario, autor, articulo) values(?,?,?,?)";
+            String query = "insert into comentarios(comentario, autor, articulo) values(?,?,?)";
             conn = DataBaseServices.getInstancia().getConexion();
             //
             PreparedStatement prepareStatement = conn.prepareStatement(query);
             //Antes de ejecutar seteo los parametros.
-            prepareStatement.setInt(1, comentario.getId());
-            prepareStatement.setString(2, comentario.getComentario());
-            prepareStatement.setString(3,comentario.getAutor().getUsername());
-            prepareStatement.setInt(4, comentario.getArticulo().getId());
+            prepareStatement.setString(1, comentario.getComentario());
+            prepareStatement.setString(2,comentario.getAutor().getUsername());
+            prepareStatement.setInt(3, comentario.getArticulo().getId());
             //
             int fila = prepareStatement.executeUpdate();
             ok = fila > 0 ;

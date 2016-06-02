@@ -6,13 +6,14 @@
     <link href="/css/miEstilo.css" rel="stylesheet" >
 </head>
 <body>
-<#include "/header.ftl">
+<#include "/adminHeader.ftl">
 <div class="container" id="contenedorCrearUsuario">
 
         <h1>Nuevo Usuario</h1>
-        <form action="/procesarCrearUsuario" method="POST">
+        <form action="/procesarNuevoUsuario/" method="POST">
             <div class = "panel panel-default">
                 <div class = "panel-body">
+                    <input type="hidden" value="false" class="form-control" id="username" name="administrador" required >
                     <div class="row">
                         <div class ="col-md-12">
                             <div class="form-group">
@@ -24,8 +25,8 @@
                     <div class="row">
                         <div class ="col-md-12">
                             <div class="form-group">
-                                <label for="matricula">Contraseña</label>
-                                <input type="password" class="form-control" id="matricula" name="matricula" required>
+                                <label for="password">Contraseña</label>
+                                <input type="password" class="form-control" id="password" name="password" required>
                             </div>
                         </div>
                     </div>
@@ -42,7 +43,7 @@
                         <div class="col-md-2"></div>
                         <div class ="col-md-9">
                             <div class="form-group">
-                                <label class="checkbox-inline"><input type="checkbox" value=""><b>Puede redactar artículos</b></label>
+                                <label class="checkbox-inline"><input type="checkbox" name="autor" value="true"><b>Puede redactar artículos</b></label>
                             </div>
                         </div>
                     </div>

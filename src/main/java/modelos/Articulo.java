@@ -11,6 +11,16 @@ public class Articulo {
     private int id;
     private String titulo;
     private  String cuerpo;
+    private String preview;
+
+    public String getPreview() {
+        return preview;
+    }
+
+    public void setPreview(String preview) {
+        this.preview = preview;
+    }
+
     private Usuario autor;
     private Date fecha;
     private ArrayList<Comentario> comentarios;
