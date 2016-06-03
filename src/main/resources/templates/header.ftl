@@ -16,7 +16,10 @@
                         <li><a href="/administracion/">Administraci&oacute;n</a></li>
                     </#if>
                     <#if usuario.autor || usuario.administrador || !usuario.esInvitado>
-                        <li><a href="">Cerrar Sesi&oacute;n</a></li>
+                        <li>  <form action="cerrarsesion/" method="POST" class="form-signin">
+                                 <button style="border-radius: 30px; background-color:transparent; border: snow; margin-top: 13px;  " type="submit">Cerrar Sesi&oacute;n</button>
+                            </form>
+                        </li>
                     <#else>
                         <li><a href="/login">Iniciar Sesi&oacute;n</a></li>
                     </#if>
@@ -25,6 +28,5 @@
         </div><!--/.container-fluid -->
     </nav>
 </div>
-
 </body>
 </html>

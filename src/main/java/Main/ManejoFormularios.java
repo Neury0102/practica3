@@ -44,6 +44,13 @@ public class ManejoFormularios {
                 return "success";
             }
         });
+        post("/cerrarsesion/", (request, response) -> {
+            request.session().invalidate();
+            response.redirect("/");
+            return "Cesion cerrada";
+        });
+
+
 
         post("procesarNuevoUsuario/", (request, response) -> {
 
