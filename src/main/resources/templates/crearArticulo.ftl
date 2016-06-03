@@ -10,7 +10,7 @@
 <div class="container">
 
         <h1>Redactar</h1>
-        <form action="/procesarCrearUsuario" method="POST">
+        <form action="/procesarCrearArticulo/" method="POST">
             <div class = "panel panel-default">
                 <div class = "panel-body">
                     <div class="row">
@@ -33,13 +33,11 @@
                         <div class ="col-md-12">
                             <div class="form-group">
                                 <label for="cuerpo">Cuerpo:</label>
-                                <textarea class="form-control" rows="10" id="cuerpo"></textarea>
+                                <textarea class="form-control" rows="10" id="cuerpo" name="cuerpo"></textarea>
                             </div>
                         </div>
                     </div>
-                    <button type="submit" name="action" id="btnCrearArticulo" value="crearUsuario" class="btn btn-primary">Publicar</button>
-
-
+                    <button type="submit" name="action" id="btnCrearArticulo" value="crearArticulo" class="btn btn-primary">Publicar</button>
                 </div>
             </div>
 

@@ -6,12 +6,14 @@ import modelos.Comentario;
 import modelos.Usuario;
 import services.ArticuloServices;
 import services.ComentarioServices;
+import services.EtiquetaServices;
 import services.UsuarioServices;
 import spark.ModelAndView;
 import spark.Session;
 import spark.template.freemarker.FreeMarkerEngine;
 import spark.Spark.*;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.SynchronousQueue;
@@ -80,6 +82,46 @@ public class ManejoFormularios {
                                                        ArticuloServices.getArticulo(Integer.parseInt(request.queryParams("articulo"))));
                 ComentarioServices.crearComentario(comentario);
                 response.redirect("/verArticulo/" + comentario.getArticulo().getId());
+            }
+            return "success";
+        });
+
+        post("procesarCrearArticulo/", (request, response) -> {
+
+            Usuario u = request.session().attribute("usuario");
+            if(u == null) {
+                response.redirect("../login");
+            }
+            else{
+                Articulo articulo = new Articulo();
+                articulo.setTitulo(request.queryParams("titulo"));
+                articulo.setCuerpo(request.queryParams("cuerpo"));
+                articulo.setAutor(u);
+                articulo.setFecha(new Date());
+                int articuloId = ArticuloServices.crearArticulo(articulo);
+                articulo.setId(articuloId);
+                EtiquetaServices.crearEtiquetas(request.queryParams("etiquetas"),articulo);
+                response.redirect("/");
+            }
+            return "success";
+        });
+
+        post("procesarEditarArticulo/", (request, response) -> {
+
+            Usuario u = request.session().attribute("usuario");
+            if(u == null) {
+                response.redirect("../login");
+            }
+            else{
+                Articulo articulo = new Articulo();
+                articulo.setTitulo(request.queryParams("titulo"));
+                articulo.setCuerpo(request.queryParams("cuerpo"));
+                articulo.setAutor(u);
+                articulo.setFecha(new Date());
+                int articuloId = ArticuloServices.crearArticulo(articulo);
+                articulo.setId(articuloId);
+                EtiquetaServices.crearEtiquetas(request.queryParams("etiquetas"),articulo);
+                response.redirect("/");
             }
             return "success";
         });

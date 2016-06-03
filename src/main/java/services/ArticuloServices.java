@@ -59,7 +59,7 @@ public class ArticuloServices {
         Connection con = null;
         try {
 
-            String query = "select * from articulos order by FECHA DESC";
+            String query = "select * from articulos order by FECHA,id DESC";
             con = DataBaseServices.getInstancia().getConexion();
             PreparedStatement prepareStatement = con.prepareStatement(query);
             ResultSet rs = prepareStatement.executeQuery();
@@ -151,24 +151,29 @@ public class ArticuloServices {
 
     }
 
-    public boolean crearArticulo(Articulo articulo){
-        boolean ok=false;
+    public static int crearArticulo(Articulo articulo){
+        int id=-1;
         Connection conn=null;
         try {
 
-            String query = "insert into articulos(id, titulo, cuerpo, autor, fecha) values(?,?,?,?,?)";
+            String query = "insert into articulos(titulo, cuerpo, autor, fecha) values(?,?,?,?)";
             conn = DataBaseServices.getInstancia().getConexion();
             //
             PreparedStatement prepareStatement = conn.prepareStatement(query);
             //Antes de ejecutar seteo los parametros.
-            prepareStatement.setInt(1, articulo.getId());
-            prepareStatement.setString(2, articulo.getTitulo());
-            prepareStatement.setString(3, articulo.getCuerpo());
-            prepareStatement.setString(4, articulo.getAutor().getUsername());
-            prepareStatement.setDate(5, (Date)articulo.getFecha());
-            //
-            int fila = prepareStatement.executeUpdate();
-            ok = fila > 0 ;
+            prepareStatement.setString(1, articulo.getTitulo());
+            prepareStatement.setString(2, articulo.getCuerpo());
+            prepareStatement.setString(3, articulo.getAutor().getUsername());
+            prepareStatement.setDate(4, new java.sql.Date(articulo.getFecha().getTime()));
+
+
+            prepareStatement.executeUpdate();
+            ResultSet generatedKeys = prepareStatement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                id = generatedKeys.getInt(1);
+            }
+            System.out.print(id);
+
 
         } catch (SQLException ex) {
             Logger.getLogger(ArticuloServices.class.getName()).log(Level.SEVERE, null, ex);
@@ -180,7 +185,7 @@ public class ArticuloServices {
             }
         }
 
-        return ok;
+        return id;
     }
 
 }

@@ -81,4 +81,14 @@ public class Articulo {
     public void setEtiquetas(ArrayList<Etiqueta> etiquetas) {
         this.etiquetas = etiquetas;
     }
+
+    public String getEtiquetasString(){
+        String et = "";
+        for (int i=0; i<etiquetas.size();i++){
+            et+=etiquetas.get(i).getEtiqueta();
+            if(i< etiquetas.size()-1)
+                et+=",";
+        }
+        return et;
+    }
 }

@@ -6,6 +6,7 @@ package modelos;
 public class Etiqueta {
     private int id;
     private String etiqueta;
+    private Articulo articulo;
 
     public int getId() {
         return id;

@@ -5,12 +5,10 @@
     <link href="/css/bootstrap.css" rel="stylesheet" >
 </head>
 <body>
-<div class="container">
-    <#include "/header.ftl">
-</div>
 
-<div class="container">
-    <h2>Artículos</h2>
+    <#include "/header.ftl">
+    <div class="container">
+        <h2>Artículos</h2>
     <#list articulos as articulo>
         <div class="col-lg-8">
             <a href="verArticulo/${articulo.id}"><h4>${articulo.titulo}</h4></a>
@@ -19,8 +17,11 @@
             <hr>
         </div>
     </#list>
-
 </div>
+
+
+
+
 
 
     <!-- /.row -->
