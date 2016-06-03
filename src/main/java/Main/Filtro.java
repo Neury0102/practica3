@@ -77,7 +77,7 @@ public class Filtro {
         before("/redactarArticulo",(request, response) -> {
             Usuario usuario=request.session().attribute("usuario");
             // System.out.print("lolbefore");
-            if(usuario == null ||usuario.getAdministrador()!=true||usuario.getAutor()){
+            if(usuario == null ||usuario.getAdministrador()!=true||!usuario.getAutor()){
                 //parada del request, enviando un codigo.
                 response.redirect("/");
             }
