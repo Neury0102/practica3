@@ -53,6 +53,11 @@ public class ManejoFormularios {
 
 
         post("procesarNuevoUsuario/", (request, response) -> {
+            if(request.queryParams("nombre") == null || request.queryParams("password") == null
+               || request.queryParams("username") == null){
+                response.redirect("../administracion/");
+                return "fail";
+            }
 
             Boolean esAutor = request.queryParams("autor") != null;
             Boolean esAdministrador = request.queryParams("administrador").equals("true");
@@ -78,7 +83,6 @@ public class ManejoFormularios {
         });
 
         post("procesarNuevoComentario/", (request, response) -> {
-
             Usuario u = request.session().attribute("usuario");
             if(u == null) {
                 response.redirect("../login");
@@ -93,8 +97,21 @@ public class ManejoFormularios {
             return "success";
         });
 
-        post("procesarCrearArticulo/", (request, response) -> {
+        post("procesarBorrarComentario/", (request, response) -> {
 
+            Usuario u = request.session().attribute("usuario");
+            if(u == null) {
+                response.redirect("../login");
+            }
+            else{
+                int id = Integer.parseInt(request.queryParams("comentario"));
+                ComentarioServices.borrarComentario(id);
+                response.redirect("/verArticulo/" + Integer.parseInt(request.queryParams("articulo")));
+            }
+            return "success";
+        });
+
+        post("procesarCrearArticulo/", (request, response) -> {
             Usuario u = request.session().attribute("usuario");
             if(u == null) {
                 response.redirect("../login");
@@ -114,20 +131,16 @@ public class ManejoFormularios {
         });
 
         post("procesarEditarArticulo/", (request, response) -> {
-
             Usuario u = request.session().attribute("usuario");
             if(u == null) {
                 response.redirect("../login");
             }
             else{
-                Articulo articulo = new Articulo();
-                articulo.setTitulo(request.queryParams("titulo"));
+                Articulo articulo = ArticuloServices.getArticulo(Integer.parseInt(request.queryParams("articulo")));
                 articulo.setCuerpo(request.queryParams("cuerpo"));
-                articulo.setAutor(u);
-                articulo.setFecha(new Date());
-                int articuloId = ArticuloServices.crearArticulo(articulo);
-                articulo.setId(articuloId);
-                EtiquetaServices.crearEtiquetas(request.queryParams("etiquetas"),articulo);
+                articulo.setTitulo(request.queryParams("titulo"));
+                ArticuloServices.editarArticulo(articulo);
+                EtiquetaServices.editarEtiquetas(request.queryParams("etiquetas"),articulo);
                 response.redirect("/");
             }
             return "success";

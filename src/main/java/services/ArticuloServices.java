@@ -188,4 +188,36 @@ public class ArticuloServices {
         return id;
     }
 
+    public static int editarArticulo(Articulo articulo){
+        int id=-1;
+        Connection conn=null;
+        try {
+
+            String query = "update  articulos set titulo=?, cuerpo=?  where id=?";
+            conn = DataBaseServices.getInstancia().getConexion();
+            PreparedStatement prepareStatement = conn.prepareStatement(query);
+            prepareStatement.setString(1, articulo.getTitulo());
+            prepareStatement.setString(2, articulo.getCuerpo());
+            System.out.print(articulo.getId());
+            prepareStatement.setInt(3,articulo.getId());
+
+            prepareStatement.executeUpdate();
+            ResultSet generatedKeys = prepareStatement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                id = generatedKeys.getInt(1);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ArticuloServices.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            try {
+                conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ArticuloServices.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        return id;
+    }
+
 }

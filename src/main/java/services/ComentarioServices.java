@@ -76,5 +76,33 @@ public class ComentarioServices {
         return ok;
     }
 
+    public static boolean  borrarComentario(int id){
+        boolean ok=false;
+        Connection conn=null;
+        try {
+
+            String query = "delete from comentarios where id=?";
+            conn = DataBaseServices.getInstancia().getConexion();
+            //
+            PreparedStatement prepareStatement = conn.prepareStatement(query);
+            //Antes de ejecutar seteo los parametros.
+            prepareStatement.setInt(1, id);
+            //
+            int fila = prepareStatement.executeUpdate();
+            ok = fila > 0 ;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ArticuloServices.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            try {
+                conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ArticuloServices.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        return ok;
+    }
+
 
 }

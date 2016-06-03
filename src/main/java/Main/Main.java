@@ -22,20 +22,10 @@ public class Main {
 
     public static void main(String[] args) throws Exception{
 
-        Connection conn= DataBaseServices.getInstancia().getConexion();
-        Statement stmt = conn.createStatement();
+
         staticFileLocation("/publico");
-        Configuration configuration=new Configuration();
-        configuration.setClassForTemplateLoading(Main.class, "/templates");
-        FreeMarkerEngine freeMarkerEngine = new FreeMarkerEngine(configuration);
-
-
-        Etiqueta estiqueta = EtiquetaServices.getEtiqueta(2);
-
-        System.out.println("dkdd");
-        get("/hello", (req, res) -> "Hello World");
-
-
+        DataBaseServices.crearTablas();
+        DataBaseServices.crearAdministrador();
         ManejoTemplates mt = new ManejoTemplates();
         mt.manejarTemplates();
         ManejoFormularios mf = new ManejoFormularios();

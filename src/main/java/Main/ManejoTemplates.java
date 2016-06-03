@@ -105,7 +105,6 @@ public class ManejoTemplates {
             Articulo a = ArticuloServices.getArticulo(Integer.parseInt(request.params("articulo")));
 
             attributes.put("usuario", u);
-            attributes.put("etiquetas", a.getEtiquetas());
             attributes.put("articulo", a);
             return new ModelAndView(attributes, "verArticulo.ftl");
         }, freeMarkerEngine);
@@ -113,13 +112,6 @@ public class ManejoTemplates {
         get("/editarArticulo/:articulo", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
             Usuario u = request.session().attribute("usuario");
-            if(u == null){
-                u = new Usuario();
-                u.setAutor(false);
-                u.setAdministrador(false);
-                u.setEsInvitado(true);
-                u.setUsername("guest");
-            }
             Articulo a = ArticuloServices.getArticulo(Integer.parseInt(request.params("articulo")));
 
             attributes.put("usuario", u);

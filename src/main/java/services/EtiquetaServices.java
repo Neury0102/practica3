@@ -107,4 +107,26 @@ public class EtiquetaServices {
         }
     }
 
+    public static void editarEtiquetas(String etiquetas, Articulo articulo){
+        Connection conn=null;
+            try {
+
+                String query = "delete from  etiquetas where articulo=?";
+                conn = DataBaseServices.getInstancia().getConexion();
+                PreparedStatement prepareStatement = conn.prepareStatement(query);
+                prepareStatement.setInt(1, articulo.getId());
+                prepareStatement.executeUpdate();
+                crearEtiquetas(etiquetas, articulo);
+
+            } catch (SQLException ex) {
+                Logger.getLogger(ArticuloServices.class.getName()).log(Level.SEVERE, null, ex);
+            } finally{
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ArticuloServices.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+    }
+
 }

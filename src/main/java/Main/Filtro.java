@@ -1,6 +1,9 @@
 package Main;
 
+import modelos.Articulo;
 import modelos.Usuario;
+import services.ArticuloServices;
+import services.UsuarioServices;
 
 import static spark.Spark.after;
 import static spark.Spark.before;
@@ -11,79 +14,95 @@ import static spark.Spark.halt;
  */
 public class Filtro {
     public void aplicarFiltros(){
-//        /**
-//         * Se ejecuta antes de un request. Podemos modificar las llamada.
-//         */
-//        before((request, response) -> {
-//            System.out.println("Filtro Before -> Realizando llamada a la ruta: "+request.pathInfo());
-//        });
-//        /**
-//         * Luego de la ejecución permute interceptar el response...
-//         */
-//        after((request, response) -> {
-//            System.out.println("Filtro After -> Incluyendo Header...");
-//            response.header("barcamp", "2016");
-//            response.header("otroHeader", "Cualquier Cosa");
-//        });
-//
-//        /**
-//         *Se ejecuta antes de un request. Podemos modificar las llamada.
-//         */
-//        before("zonaadmin/",(request, response) -> {
-//            Usuario usuario=request.session(true).attribute("usuario");
-//           // System.out.print("lolbefore");
-//            if(usuario==null){
-//                //parada del request, enviando un codigo.
-//                halt(401, "No tiene permisos para acceder -- Lo dice el filtro....");
-//            }
-//            response.redirect("/");
-//        });
+
         before("/login",(request, response) -> {
             Usuario usuario=request.session().attribute("usuario");
-           // System.out.print("lolbefore");
             if(usuario!=null){
-                //parada del request, enviando un codigo.
                 response.redirect("/");
             }
         });
 
         before("/administracion/",(request, response) -> {
             Usuario usuario=request.session().attribute("usuario");
-            // System.out.print("lolbefore");
             if(usuario == null ||usuario.getAdministrador()!=true){
-                //parada del request, enviando un codigo.
+
                 response.redirect("/");
             }
         });
 
         before("/administracion/editar/:valor",(request, response) -> {
             Usuario usuario=request.session().attribute("usuario");
-            // System.out.print("lolbefore");
             if(usuario == null ||usuario.getAdministrador()!=true){
-                //parada del request, enviando un codigo.
                 response.redirect("/");
             }
         });
 
         before("/administracion/crearUsuario",(request, response) -> {
             Usuario usuario=request.session().attribute("usuario");
-            // System.out.print("lolbefore");
             if(usuario == null ||usuario.getAdministrador()!=true){
-                //parada del request, enviando un codigo.
                 response.redirect("/");
             }
         });
 
         before("/redactarArticulo",(request, response) -> {
             Usuario usuario=request.session().attribute("usuario");
-            // System.out.print("lolbefore");
-            if(usuario == null ||usuario.getAdministrador()!=true||!usuario.getAutor()){
-                //parada del request, enviando un codigo.
+            if(usuario!=null && usuario.getAdministrador())
+                return;
+            if(usuario == null ||!usuario.getAutor()){
                 response.redirect("/");
             }
         });
 
+        before("/editarArticulo/:articulo",(request, response) -> {
+            Usuario usuario=request.session().attribute("usuario");
+            if(usuario!=null && usuario.getAdministrador())
+                return;
+            if(usuario == null ||!usuario.getAutor()){
+                response.redirect("/");
+                return;
+            }
+            Articulo articulo = ArticuloServices.getArticulo(Integer.parseInt(request.params("articulo")));
 
+            if (articulo == null || !articulo.getAutor().getUsername().equals(usuario.getUsername()))
+                response.redirect("/");
+        });
+
+
+        before("procesarCrearArticulo/", (request, response) -> {
+            if( request.queryParams("titulo") == null ||
+                    request.queryParams("cuerpo") == null || request.queryParams("cuerpo").length() > 2000
+                    || request.queryParams("etiquetas") == null ){
+                halt(401, "Cuerpo demasiado largo");
+            }});
+        before("procesarEditarArticulo/", (request, response) -> {
+            if( request.queryParams("titulo") == null ||
+                    request.queryParams("cuerpo") == null || request.queryParams("cuerpo").length() > 2000
+                    || request.queryParams("etiquetas") == null ){
+                halt(401, "Cuerpo demasiado largo");
+            }
+        });
+
+
+        before("procesarNuevoComentario/", (request, response) -> {
+            if(request.queryParams("comentario") == null || request.queryParams("username") == null ||
+                    request.queryParams("articulo") == null|| request.queryParams("comentario").length() > 500) {
+                halt(401, "Comentario demasiado largo");
+            }});
+        before("procesarEditarUsuario/", (request, response) -> {
+            if(request.queryParams("nombre") == null || request.queryParams("password") == null
+                    || request.queryParams("username") == null){
+                halt(401, "Formulario invalido");
+            }});
+        before("procesarNuevoUsuario/", (request, response) -> {
+                if(request.queryParams("nombre") == null || request.queryParams("password") == null
+                    || request.queryParams("username") == null){
+                    halt(401, "Formulario invalido");
+
+                }
+                if(UsuarioServices.getUsuario(request.queryParams("username")) != null){
+                    halt(401, "Este usuario ya existe!");
+             }
+        });
 
 
     }

@@ -48,9 +48,7 @@
                     </div>
                     <br>
                     <button type="submit" name="action" id="btnEditarUsuario" value="editarUsuario" class="btn btn-primary">Editar</button>
-                    <#if !usuario.administrador>
-                        <button type="submit" name="action" id="btnEditarUsuario" value="borrarUsuario" class="btn btn-danger">Borrar</button>
-                    </#if>
+
 
 
                 </div>
