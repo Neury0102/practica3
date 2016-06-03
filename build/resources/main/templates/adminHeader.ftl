@@ -11,7 +11,10 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="/../">Blog</a></li>
-                    <li><a href="">Cerrar Sesi&oacute;n</a></li>
+                    <li>
+                        <form action="/cerrarsesion/" method="POST" class="form-signin">
+                             <button style="border-radius: 30px; background-color:transparent; border: snow; margin-top: 13px;  " type="submit">Cerrar Sesi&oacute;n</button>
+                        </form></li>
                 </ul>
             </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->

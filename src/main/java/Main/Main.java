@@ -40,6 +40,8 @@ public class Main {
         mt.manejarTemplates();
         ManejoFormularios mf = new ManejoFormularios();
         mf.manejarFormularios();
+        Filtro ft = new Filtro();
+        ft.aplicarFiltros();
 
 
 
