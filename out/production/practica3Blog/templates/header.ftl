@@ -16,7 +16,7 @@
                         <li><a href="/administracion/">Administraci&oacute;n</a></li>
                     </#if>
                     <#if usuario.autor || usuario.administrador || !usuario.esInvitado>
-                        <li>  <form action="cerrarsesion/" method="POST" class="form-signin">
+                        <li>  <form action="/cerrarsesion/" method="POST" class="form-signin">
                                  <button style="border-radius: 30px; background-color:transparent; border: snow; margin-top: 13px;  " type="submit">Cerrar Sesi&oacute;n</button>
                             </form>
                         </li>

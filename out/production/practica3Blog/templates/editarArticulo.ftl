@@ -11,7 +11,7 @@
 
         <h1>Editar Artículo</h1>
         <form action="/procesarEditarArticulo/" method="POST">
-            <input type="hidde" name ="articulo" value="${articulo.id}" >
+            <input type="hidden" name ="articulo" value="${articulo.id}" >
             <div class = "panel panel-default">
                 <div class = "panel-body">
                     <div class="row">

@@ -25,7 +25,6 @@ public class Filtro {
         before("/administracion/",(request, response) -> {
             Usuario usuario=request.session().attribute("usuario");
             if(usuario == null ||usuario.getAdministrador()!=true){
-
                 response.redirect("/");
             }
         });
